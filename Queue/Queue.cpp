@@ -1,7 +1,7 @@
 #include "Queue.h"
 
 int *newArray(int length){
-    int *array = new(length);
+    int *array = new int[length];
     return array;
 }
 
