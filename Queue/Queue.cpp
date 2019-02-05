@@ -30,4 +30,8 @@ int main()
         tail++;
         head++;
     }
+
+    getchar();
+    getchar();
+    return 0;
 }
