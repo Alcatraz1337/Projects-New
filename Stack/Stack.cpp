@@ -7,12 +7,7 @@ int getLength(char *a){
 }
 
 int getMid(int length){
-    if(length % 2 == 0){
-        return length / 2;
-    }
-    else{
-        return length / 2 - 1;
-    }
+    return length / 2 - 1;
 }
 
 int getNext(int length){
@@ -25,7 +20,7 @@ int getNext(int length){
 }
 
 bool isPalindrome(int top){
-    if(top == 0){
+    if(top == -1){
         return true;
     }
     else{
@@ -42,7 +37,7 @@ int main()
     len = getLength(a);
     top = getMid(len);
     next = getNext(len);
-    for (int i = next; i < len; i++){
+    for (; next < len; next++){
         if(a[next] != a[top])
             break;
         top--;
