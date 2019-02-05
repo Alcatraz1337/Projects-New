@@ -42,7 +42,7 @@ int main()
     len = getLength(a);
     top = getMid(len);
     next = getNext(len);
-    for (int i = next; i < len; i++){
+    for (; next < len; next++){
         if(a[next] != a[top])
             break;
         top--;
