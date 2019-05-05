@@ -1,5 +1,5 @@
 template <class T>
-void ArrayList<T> :: DeleteSpec(T x){
+void ArrayList<T> :: deleteSpec(T x){
     int i = 0;
     for (i; i < curLen; i++){
         if(ArrayList[i] = x){
