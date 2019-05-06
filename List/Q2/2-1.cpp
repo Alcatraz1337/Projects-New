@@ -11,6 +11,7 @@ T ArrayList<T> :: delete minElement(){
         }
     } // find the minimum element and record the position
 
-    ArrayList[position] = ArrayList[curLen];
+    ArrayList[position] = ArrayList[curLen - 1];
+    curLen--;
     return min;
 }
