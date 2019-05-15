@@ -9,63 +9,71 @@ class MyQueue{
         void push(int data);
         void pop();
         int head();
-        int tail();
+        void checkQueue();
         bool isFull(); // tag
         bool isEmpty();
 
     private:
         bool tag; // 0 empty, 1 full
-        int count;
         int size;
         int *array;
-        int *front;
-        int *rear;
+        int front;
+        int rear;
 };
 
 MyQueue::MyQueue(const int size){
     array = new int[size];
-    front = array;
-    rear = front = array;
+    for (int i = 0; i < size; i++){
+        array[i] = 0;
+    }
+        rear = front = 0;
     tag = 0;
     this->size = size;
-    count = 0;
 }
 
 MyQueue::~MyQueue(){
     delete array;
 }
 
+bool MyQueue::isEmpty(){
+    return (front == rear && tag == 0);
+}
+
+bool MyQueue::isFull(){
+    return (front == rear && tag == 1);
+}
+
 void MyQueue::push(int data){
-    if(tag){ 
-        cout << "Error: queue is already full!";
-        exit(-1);
+    if(isFull()){
+        cout << "Error: queue is already full!" << endl;
+        return;
     }
-    else{
-        *rear = data;
-        rear++;
-        if()  //需要修改 逻辑问题
-    }
+    array[rear] = data;
+    rear = (rear + 1) % size;
+    if(rear == front)  //需要修改 逻辑问题
+        tag = 1;
 }
 
 void MyQueue::pop(){
     if(isEmpty()){
-        cout << "Error: Queue is already empty!";
-        exit(-1);
+        cout << "Error: Queue is already empty!" << endl;
+        return;
     }
-    else{
-        if(front == &array[size - 1])
-            front = &array[0];
-        front++;
+    front = (front + 1) % size;
+    if(rear == front)
+        tag = 0;
+}
+
+void MyQueue::checkQueue(){
+    for(int i = 0; i < size; i++){
+        cout << array[i] << ' ';
     }
-    count--;
+    cout << endl;
+    cout << "Front pos: " << front << "\n Rear pos: " << rear << endl;
 }
 
 int MyQueue::head(){
-    return *front;
-}
-
-int MyQueue::tail(){
-    return *rear;
+    return array[front];
 }
 
 int main(){
@@ -73,7 +81,7 @@ int main(){
     int op = 0;
     int temp = 0;
     do{
-        cout << "1: push / 2: pop / 3: check front / 4: check rear / 0: exit\n";
+        cout << "1: push / 2: pop / 3: check front /4: check queue/ 0: exit\n";
         cin >> op;
         switch(op){
             case 1:
@@ -92,12 +100,7 @@ int main(){
                 cout << CircleQueue.head() << endl;
                 break;
             case 4:
-                if(CircleQueue.isEmpty()){
-                    cout << "Error: Queue is empty!";
-                    break;
-                }
-                cout << CircleQueue.tail() << endl;
-                break;
+                CircleQueue.checkQueue();
             default:
                 break;
         }
