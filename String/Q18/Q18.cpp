@@ -24,27 +24,39 @@ int* getNext(string &pattern){
 
 int kmp(string &t, string &p){
     int *next = getNext(p);
-    int i = 0;
-    int j = 0;
-    while(i < t.length() && j < p.length()){
-        if(t[i] == p[j]){
+    int i = 0; // 主串
+    int j = 0; // 子串
+    while(i <(int) t.length() && j <(int) p.length()){
+        if(t[i] == p[j] || j == -1){ //j = -1时，移动i，j也要归零
             i++;
             j++;
         }
-        else if(j != -1) //mismatch but not at the front of the p
+        else  
             j = next[j];
-        else //mismatch at the front of the p
-            i++;
+
     }
-    if(i == t.length() - 1 && j != p.length() - 1) // i reach the end of t, but haven't matched yet.
+    if(j == p.length())
+        return i - j + 1;
+    else
         return -1;
-    else if (j == p.length() - 1)
-        return i - p.length() + 1;
+}
+
+string reverseString(string &s){
+    int len = s.length();
+    char *rev = new char[len];
+    int j = 0;
+    for (int i = len - 1; i >= 0;)
+        rev[j++] = s[i--];
+    return rev;
 }
 
 int main(){
     string ptr = "acacab";
     string str = "abccacacabcacbbba";
-    cout << "Match at: " << kmp(str, ptr) << endl;
+    int strlen = str.length();
+    int ptrlen = ptr.length();
+    string ptrrev = reverseString(ptr);
+    string strrev = reverseString(str);
+    cout << "Match at: " << strlen + 1 - kmp(strrev, ptrrev) - ptrlen + 1 << endl;
     return 0;
 }
