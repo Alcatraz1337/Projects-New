@@ -1,0 +1,91 @@
+Preorder Recusion: 
+   1 hi
+   3 a
+   2 and
+   1 am
+   1 have
+   1 car
+   1 dancing
+   1 my
+   1 is
+   3 i
+   1 like
+   1 name
+   1 student
+
+Preoder Non Recusion: 
+   1 hi
+   3 a
+   2 and
+   1 am
+   1 have
+   1 car
+   1 dancing
+   1 my
+   1 is
+   3 i
+   1 like
+   1 name
+   1 student
+
+InOrder Recusion: 
+   3 a
+   1 am
+   2 and
+   1 car
+   1 dancing
+   1 have
+   1 hi
+   3 i
+   1 is
+   1 like
+   1 my
+   1 name
+   1 student
+
+InOrder Non Recusion: 
+   3 a
+   1 am
+   2 and
+   1 car
+   1 dancing
+   1 have
+   1 hi
+   3 i
+   1 is
+   1 like
+   1 my
+   1 name
+   1 student
+
+
+Postorder Recusion:
+   1 am
+   1 dancing
+   1 car
+   1 have
+   2 and
+   3 a
+   3 i
+   1 like
+   1 is
+   1 student
+   1 name
+   1 my
+   1 hi
+
+Postorder Non Recusion: 
+   1 am
+   1 dancing
+   1 car
+   1 have
+   2 and
+   3 a
+   3 i
+   1 like
+   1 is
+   1 student
+   1 name
+   1 my
+   1 hi
+

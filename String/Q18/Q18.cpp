@@ -51,8 +51,8 @@ string reverseString(string &s){
 }
 
 int main(){
-    string ptr = "acacab";
-    string str = "abccacacabcacbbba";
+    string ptr = "str";
+    string str = "substrsubstr";
     int strlen = str.length();
     int ptrlen = ptr.length();
     string ptrrev = reverseString(ptr);
