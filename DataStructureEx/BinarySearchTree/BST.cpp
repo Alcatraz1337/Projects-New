@@ -16,7 +16,7 @@ class BinarySearchTreeNode{
 
     public:
         BinarySearchTreeNode *addNode(BinarySearchTreeNode *&root ,int num, BinarySearchTreeNode *prevNode);
-        BinarySearchTreeNode *searchNode(BinarySearchTreeNode *root, int num);
+        BinarySearchTreeNode *&searchNode(BinarySearchTreeNode *root, int num);
         BinarySearchTreeNode *iterativeSearch(BinarySearchTreeNode *root, int num);
         BinarySearchTreeNode *minimum(BinarySearchTreeNode *root);
         BinarySearchTreeNode *maximum(BinarySearchTreeNode *root);
@@ -25,8 +25,8 @@ class BinarySearchTreeNode{
         BinarySearchTreeNode *getRightChild(BinarySearchTreeNode *node);
         BinarySearchTreeNode *getLeftChild(BinarySearchTreeNode *node);
         void insert(BinarySearchTreeNode *root, int z);
-        void deleteByMerging(BinarySearchTreeNode *root);
-        void deleteByCopying(BinarySearchTreeNode *root);
+        void deleteByMerging(BinarySearchTreeNode *&root);
+        //void deleteByCopying(BinarySearchTreeNode *root);
 
         void Inorder(BinarySearchTreeNode *root);
 };
@@ -72,7 +72,7 @@ BinarySearchTreeNode* BinarySearchTreeNode :: addNode(BinarySearchTreeNode *&roo
 }
 
 
-BinarySearchTreeNode* BinarySearchTreeNode::searchNode(BinarySearchTreeNode *root, int num){
+BinarySearchTreeNode*& BinarySearchTreeNode::searchNode(BinarySearchTreeNode *root, int num){
     if(root == NULL || num == root->key)
         return root;
     if(num < root->key)
@@ -134,54 +134,56 @@ void BinarySearchTreeNode::insert(BinarySearchTreeNode *root, int z){
         prev->lchild->addNode(prev->lchild, z, prev);
 }
 
-void BinarySearchTreeNode::deleteByMerging(BinarySearchTreeNode *root){
+void BinarySearchTreeNode::deleteByMerging(BinarySearchTreeNode *&root){
     BinarySearchTreeNode *temp = root;
     if(root != NULL){
-        if(root->rchild == NULL && root->lchild == NULL)
-            ;
-        else if(root->rchild == NULL && root->lchild != NULL) // 没有右子树但是有左
-            root = root->lchild;
-        else if(root->lchild == NULL && root->rchild != NULL) // 没有左子树但是有右
-            root = root->rchild;
-        else{ //左右都非空
+        if(root->rchild == NULL && root->lchild == NULL){ //左右都空
+            if(root->parent->rchild == root)
+                root->parent->rchild = NULL;
+            else
+                root->parent->lchild = NULL;              
+        }
+        else if(root->lchild && root->rchild){ //左右都非空
             temp = root->lchild;
             while(temp->rchild != NULL)
                 temp = temp->rchild; // 找到中序遍历的最后一个节点
             temp->rchild = root->rchild;
-            temp = root;
-            root = root->lchild;
+            if(root->parent != NULL){ //父节点不空
+                if(root->parent->rchild == root)
+                    root->parent->rchild = temp->parent;
+                else
+                    root->parent->lchild = temp->parent;
+            }
+            else{
+                root = root->lchild;
+                return;
+            }
         }
-        delete root;
-    }
-}
-
-void BinarySearchTreeNode::deleteByCopying(BinarySearchTreeNode *root){
-    BinarySearchTreeNode *temp = root;
-    BinarySearchTreeNode *prev;
-    if(root->rchild == NULL)
-        root = root->lchild;
-    else if(root->lchild == NULL)
-        root = root->rchild;
-    else{
-        temp = root->lchild;
-        prev = root;
-        while(temp->rchild != NULL){
-            prev = temp;
-            temp = temp->rchild;
+        else{ // 左右有一个是空
+            if(root->lchild)
+                temp = root->lchild;
+            else
+                temp = root->rchild; //找到要拼接的节点
+            if(root->parent != NULL){
+                if(root->parent->lchild == root) // 如果该删除节点是其父节点的左孩子 则将该节点的孩子拼到父节点左孩子之下
+                    root->parent->lchild = temp;
+                else
+                    root->parent->rchild = temp;
+            }
+            else
+                temp->parent = NULL;
         }
-        root->key = temp->key;
-        if(prev == root)
-            prev->lchild = temp->lchild;
-        else
-            prev->rchild = temp->lchild;
+        root->key = NULL;
+        root->lchild = NULL;
+        root->rchild = NULL;
+        root->parent = NULL;
     }
-    delete temp;
 }
 
 int main(){
     BinarySearchTreeNode *tree = NULL;
-    int q[11] = {105, 110, 99, 122, 250, 200, 300, 330, 400, 450, 500};
-    for(int i = 0; i < 11; i++)
+    int q[12] = {105, 110, 99, 122, 250, 200, 400, 330, 450, 300, 500, 122};
+    for(int i = 0; i < 12; i++)
         tree->addNode(tree, q[i], nullptr);
     tree->Inorder(tree);
     cout << "\nfind number 122, *using normal search* ad: " << tree->searchNode(tree, 122);
@@ -192,9 +194,9 @@ int main(){
     tree->insert(tree, 228);
     cout << "\ninsert 228. Tree after: \n";
     tree->Inorder(tree);
-    cout << "\ndelete 228. *by merging*: \n";
-    tree->deleteByMerging(tree->searchNode(tree, 228));
-    cout << "\nAfter:\n";
+    cout << "\ndelete . *by merging*:\n";
+    //BinarySearchTreeNode *pointer = tree->searchNode(tree, 99);
+    tree->deleteByMerging(tree->searchNode(tree, 250));
     tree->Inorder(tree);
 
     return 0;

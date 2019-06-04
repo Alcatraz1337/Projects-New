@@ -65,20 +65,6 @@ BTNode* AddNode(BTNode *root,char *w)
 		root->count=1;
 		root->lchild=root->rchild=NULL;
 	}
-/* 	else{
-		while(!nodeQueue.empty()){
-			//node = nodeQueue.front();
-			nodeQueue.pop();
-			node = nodeQueue.front();
-			//strcpy(node->word, w);
-			if(node->lchild == NULL){
-				nodeQueue.push(node->lchild);
-			}
-			if(node->rchild == NULL){
-				nodeQueue.push(node->rchild);
-			}
-		}
-	} */
 
 	else if(strcmp(w,root->word)==0)
 		root->count++;
