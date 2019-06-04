@@ -16,19 +16,34 @@ class BinarySearchTreeNode{
 
     public:
         BinarySearchTreeNode *addNode(BinarySearchTreeNode *&root ,int num, BinarySearchTreeNode *prevNode);
-        BinarySearchTreeNode *searchNode(BinarySearchTreeNode *&root, int num);
-        BinarySearchTreeNode *iterativeSearch(BinarySearchTreeNode *&root, int num);
-        BinarySearchTreeNode *minimum(BinarySearchTreeNode *&root);
-        BinarySearchTreeNode *maximum(BinarySearchTreeNode *&root);
-        BinarySearchTreeNode *successor(BinarySearchTreeNode *&root);
-        void insert(BinarySearchTreeNode *&root, int z);
-        void deleteByMerging(BinarySearchTreeNode *&root);
-        void deleteByCopying(BinarySearchTreeNode *&root);
+        BinarySearchTreeNode *searchNode(BinarySearchTreeNode *root, int num);
+        BinarySearchTreeNode *iterativeSearch(BinarySearchTreeNode *root, int num);
+        BinarySearchTreeNode *minimum(BinarySearchTreeNode *root);
+        BinarySearchTreeNode *maximum(BinarySearchTreeNode *root);
+        BinarySearchTreeNode *successor(BinarySearchTreeNode *root);
+        int getKey(BinarySearchTreeNode *node);
+        BinarySearchTreeNode *getRightChild(BinarySearchTreeNode *node);
+        BinarySearchTreeNode *getLeftChild(BinarySearchTreeNode *node);
+        void insert(BinarySearchTreeNode *root, int z);
+        void deleteByMerging(BinarySearchTreeNode *root);
+        void deleteByCopying(BinarySearchTreeNode *root);
 
-        void Inorder(BinarySearchTreeNode *&root);
+        void Inorder(BinarySearchTreeNode *root);
 };
 
- void BinarySearchTreeNode::Inorder(BinarySearchTreeNode *&root)        //递归前序遍历
+int BinarySearchTreeNode::getKey(BinarySearchTreeNode *node){
+    return node->key;
+}
+
+BinarySearchTreeNode* BinarySearchTreeNode::getLeftChild(BinarySearchTreeNode *node){
+    return node->lchild;
+}
+
+BinarySearchTreeNode* BinarySearchTreeNode::getRightChild(BinarySearchTreeNode *node){
+    return node->rchild;
+}
+
+ void BinarySearchTreeNode::Inorder(BinarySearchTreeNode *root)        //递归中序遍历
 {
    if(root!=NULL)
    {
@@ -57,7 +72,7 @@ BinarySearchTreeNode* BinarySearchTreeNode :: addNode(BinarySearchTreeNode *&roo
 }
 
 
-BinarySearchTreeNode* BinarySearchTreeNode::searchNode(BinarySearchTreeNode *&root, int num){
+BinarySearchTreeNode* BinarySearchTreeNode::searchNode(BinarySearchTreeNode *root, int num){
     if(root == NULL || num == root->key)
         return root;
     if(num < root->key)
@@ -66,7 +81,7 @@ BinarySearchTreeNode* BinarySearchTreeNode::searchNode(BinarySearchTreeNode *&ro
         return root->searchNode(root->rchild, num);
 }
 
-BinarySearchTreeNode* BinarySearchTreeNode::iterativeSearch(BinarySearchTreeNode *&root, int num){
+BinarySearchTreeNode* BinarySearchTreeNode::iterativeSearch(BinarySearchTreeNode *root, int num){
     while(root != NULL && num != root->key){
         if(num < root->key)
             root = root->lchild;
@@ -76,19 +91,19 @@ BinarySearchTreeNode* BinarySearchTreeNode::iterativeSearch(BinarySearchTreeNode
     return root;
 }
 
-BinarySearchTreeNode* BinarySearchTreeNode::minimum(BinarySearchTreeNode *&root){
+BinarySearchTreeNode* BinarySearchTreeNode::minimum(BinarySearchTreeNode *root){
     while(root->lchild != NULL)
         root = root->lchild;
     return root;
 }
 
-BinarySearchTreeNode* BinarySearchTreeNode::maximum(BinarySearchTreeNode *&root){
+BinarySearchTreeNode* BinarySearchTreeNode::maximum(BinarySearchTreeNode *root){
     while(root->rchild != NULL)
         root = root->rchild;
     return root;
 }
 
-BinarySearchTreeNode* BinarySearchTreeNode::successor(BinarySearchTreeNode *&root){
+BinarySearchTreeNode* BinarySearchTreeNode::successor(BinarySearchTreeNode *root){
     if(root->rchild != NULL)
         return root->minimum(root->rchild);
     else{
@@ -101,7 +116,7 @@ BinarySearchTreeNode* BinarySearchTreeNode::successor(BinarySearchTreeNode *&roo
     }
 }
 
-void BinarySearchTreeNode::insert(BinarySearchTreeNode *&root, int z){
+void BinarySearchTreeNode::insert(BinarySearchTreeNode *root, int z){
     BinarySearchTreeNode *node = root;
     BinarySearchTreeNode *prev = NULL;
     while(node != NULL){
@@ -114,31 +129,33 @@ void BinarySearchTreeNode::insert(BinarySearchTreeNode *&root, int z){
     if(root == NULL)
         root->addNode(root, z, root->parent);
     else if(prev->key < z)
-        prev->rchild->addNode(prev->rchild, z, prev->rchild->parent);
+        prev->rchild->addNode(prev->rchild, z, prev);
     else
-        prev->lchild->addNode(prev->lchild, z, prev->lchild->parent);
+        prev->lchild->addNode(prev->lchild, z, prev);
 }
 
-void BinarySearchTreeNode::deleteByMerging(BinarySearchTreeNode *&root){
+void BinarySearchTreeNode::deleteByMerging(BinarySearchTreeNode *root){
     BinarySearchTreeNode *temp = root;
     if(root != NULL){
-        if(!root->rchild)
+        if(root->rchild == NULL && root->lchild == NULL)
+            ;
+        else if(root->rchild == NULL && root->lchild != NULL) // 没有右子树但是有左
             root = root->lchild;
-        else if(root->lchild == NULL)
+        else if(root->lchild == NULL && root->rchild != NULL) // 没有左子树但是有右
             root = root->rchild;
-        else{
+        else{ //左右都非空
             temp = root->lchild;
             while(temp->rchild != NULL)
-                temp = temp->rchild;
+                temp = temp->rchild; // 找到中序遍历的最后一个节点
             temp->rchild = root->rchild;
             temp = root;
             root = root->lchild;
         }
-        delete temp;
+        delete root;
     }
 }
 
-void BinarySearchTreeNode::deleteByCopying(BinarySearchTreeNode *&root){
+void BinarySearchTreeNode::deleteByCopying(BinarySearchTreeNode *root){
     BinarySearchTreeNode *temp = root;
     BinarySearchTreeNode *prev;
     if(root->rchild == NULL)
@@ -169,5 +186,16 @@ int main(){
     tree->Inorder(tree);
     cout << "\nfind number 122, *using normal search* ad: " << tree->searchNode(tree, 122);
     cout << "\nfind number 122, *using iteractive search* ad: " << tree->iterativeSearch(tree, 122);
+    cout << "\nthe minimum is: " << tree->getKey(tree->minimum(tree));
+    cout << "\nthe maximum is: " << tree->getKey(tree->maximum(tree));
+    cout << "\nthe successor of 122 is: " << tree->getKey(tree->successor(tree->searchNode(tree, 122)));
+    tree->insert(tree, 228);
+    cout << "\ninsert 228. Tree after: \n";
+    tree->Inorder(tree);
+    cout << "\ndelete 228. *by merging*: \n";
+    tree->deleteByMerging(tree->searchNode(tree, 228));
+    cout << "\nAfter:\n";
+    tree->Inorder(tree);
+
     return 0;
 }
