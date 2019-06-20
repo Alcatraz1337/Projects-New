@@ -22,7 +22,7 @@ int* getNext(string &pattern){
     return next;
 }
 
-int kmp(string &t, string &p){
+int kmp(string &t, string &p){//t主串 p字串
     int *next = getNext(p);
     int i = 0; // 主串
     int j = 0; // 子串

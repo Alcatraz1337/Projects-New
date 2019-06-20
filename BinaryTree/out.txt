@@ -6,12 +6,17 @@ Preorder Recusion:
    1 have
    1 car
    1 dancing
+   1 fuck
    1 my
    1 is
    3 i
+   1 im
    1 like
    1 name
    1 student
+   1 shit
+   1 out
+   1 this
 
 Preoder Non Recusion: 
    1 hi
@@ -21,12 +26,17 @@ Preoder Non Recusion:
    1 have
    1 car
    1 dancing
+   1 fuck
    1 my
    1 is
    3 i
+   1 im
    1 like
    1 name
    1 student
+   1 shit
+   1 out
+   1 this
 
 InOrder Recusion: 
    3 a
@@ -34,14 +44,19 @@ InOrder Recusion:
    2 and
    1 car
    1 dancing
+   1 fuck
    1 have
    1 hi
    3 i
+   1 im
    1 is
    1 like
    1 my
    1 name
+   1 out
+   1 shit
    1 student
+   1 this
 
 InOrder Non Recusion: 
    3 a
@@ -49,26 +64,36 @@ InOrder Non Recusion:
    2 and
    1 car
    1 dancing
+   1 fuck
    1 have
    1 hi
    3 i
+   1 im
    1 is
    1 like
    1 my
    1 name
+   1 out
+   1 shit
    1 student
+   1 this
 
 
 Postorder Recusion:
    1 am
+   1 fuck
    1 dancing
    1 car
    1 have
    2 and
    3 a
+   1 im
    3 i
    1 like
    1 is
+   1 out
+   1 shit
+   1 this
    1 student
    1 name
    1 my
@@ -76,14 +101,19 @@ Postorder Recusion:
 
 Postorder Non Recusion: 
    1 am
+   1 fuck
    1 dancing
    1 car
    1 have
    2 and
    3 a
+   1 im
    3 i
    1 like
    1 is
+   1 out
+   1 shit
+   1 this
    1 student
    1 name
    1 my
