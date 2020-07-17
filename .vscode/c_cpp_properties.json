@@ -1,21 +1,13 @@
-
 {
     "configurations": [
         {
-            "name": "MinGW",
+            "name": "Win32",
             "intelliSenseMode": "clang-x64",
-            "compilerPath": "C:/Program Files/LLVM/bin/gcc.exe",
+            "compilerPath": "C:\\mingw-w64\\x86_64-8.1.0-win32-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe",
             "includePath": [
-                "${workspaceFolder}"
+                "${workspaceFolder}/**"
             ],
-            "defines": [],
-            "browse": {
-                "path": [
-                    "${workspaceFolder}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
+            "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
             "cStandard": "c11",
             "cppStandard": "c++17"
         }

@@ -1,14 +1,15 @@
 #include <iostream>
+#include <vector>
 #include <string>
+
 using namespace std;
-int main(){
-    string a = "abcd";
-    if(-1 < (int) a.length())
-        cout << "true";
-    else
+
+int main()
+{
+    vector<string> msg {"Hello", "C++", "World", "from", "VS Code", "and the C++ extension!"};
+    for (const string& word : msg)
     {
-        cout << a.length();
-        cout << "false";
+        cout << word << " ";
     }
-    return 0;
+    cout << endl;
 }
